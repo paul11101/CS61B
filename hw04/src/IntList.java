@@ -43,7 +43,8 @@ public class IntList {
      */
     public static IntList incrRecursiveNondestructive(IntList L, int x) {
         // TODO: Fill in this code
-        return null;
+        if (L == null) return null;
+        return new IntList(L.first + x, incrRecursiveNondestructive(L.rest, x));
     }
 
     /**
@@ -53,7 +54,10 @@ public class IntList {
      */
     public static IntList incrRecursiveDestructive(IntList L, int x) {
         // TODO: Fill in this code
-        return null;
+        if (L == null) return null;
+        L.first += x;
+        incrRecursiveDestructive(L.rest, x);
+        return L;
     }
 
     /**
@@ -63,7 +67,17 @@ public class IntList {
      */
     public static IntList incrIterativeNondestructive(IntList L, int x) {
         // TODO: Fill in this code
-        return null;
+        if (L == null) return null;
+        IntList newHead = new IntList(L.first + x, null);
+        IntList pNew = newHead;
+        IntList pOld = L.rest;
+
+        while (pOld != null) {
+            pNew.rest = new IntList(pOld.first + x, null);
+            pNew = pNew.rest;
+            pOld = pOld.rest;
+        }
+        return newHead;
     }
 
     /**
@@ -74,7 +88,13 @@ public class IntList {
      */
     public static IntList incrIterativeDestructive(IntList L, int x) {
         // TODO: Fill in this code
-        return null;
+        if (L == null) return null;
+        IntList p = L;
+        while (p != null) {
+            p.first += x;
+            p = p.rest;
+        }
+        return L;
     }
 
     /**
@@ -83,7 +103,11 @@ public class IntList {
      */
     public static IntList concatenate(IntList L1, IntList L2) {
         // TODO: Fill in this code
-        return null;
+        if (L1 == null) return L2;
+        IntList p = L1;
+        while (p.rest != null) p = p.rest;
+        p.rest = L2;
+        return L1;
     }
 
     /*
@@ -97,7 +121,13 @@ public class IntList {
      */
     public int sum() {
         // Optional: Fill in this code
-        return 0;
+        int total = 0;
+        IntList p = this;
+        while (p != null) {
+            total += p.first;
+            p = p.rest;
+        }
+        return total;
     }
 
     /**
@@ -105,6 +135,9 @@ public class IntList {
      */
     public void addLast(int x) {
         // Optional: Fill in this code
+        IntList p = this;
+        while (p.rest != null) p = p.rest;
+        p.rest = new IntList(x, null);
     }
 
     /**
@@ -115,5 +148,8 @@ public class IntList {
      */
     public void addFirst(int x) {
         // Optional: Fill in this code
+        IntList old = new IntList(this.first, this.rest);
+        this.first = x;
+        this.rest = old;
     }
 }
